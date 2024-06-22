@@ -7,7 +7,7 @@ const Button = (props) =>{
           (type === 'add' && 'add') || 
           (type === 'remove' && 'remove') ||
           (type === 'checkout' && 'checkout')
-          } ${disable === true && 'disabled'}`}
+          }  ${disable === true && 'disabled'}`}
           onClick={onClick}
           disabled={disable}
         >

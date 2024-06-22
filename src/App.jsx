@@ -8,9 +8,11 @@ const courses = getData()
 const telegram = window.Telegram.WebApp;
 const App = () => {
   const [cartItems , setCartItems] = useState([])
+
   useEffect(() => {
     telegram.ready()
   }, []);
+
   const onAddItem = (item) => {
     const existItem = cartItems.find(c => c.id === item.id)
 
@@ -22,7 +24,7 @@ const App = () => {
       setCartItems(newData)
     }
   }
-  const onRemoveItem = (item) => {
+  const onRemoveItem = item => {
     const existItem = cartItems.find(c => c.id === item.id);
 
     if (existItem.quantity === 1) {
@@ -39,7 +41,20 @@ const App = () => {
   }
 
   const onSendData = useCallback(() =>{
-    telegram.sendDate(JSON.stringify(cartItems))
+    const queryID = telegram.initDataUnsave?.query_id
+
+    if (queryID) {
+      fetch('https://localhost:8080', {
+        method:'Post',
+        headers:{
+          'Content-Type':'application/json',
+        },
+        body:JSON.stringify(cartItems)
+      })
+    }else {
+      telegram.sendDate(JSON.stringify(cartItems))
+    }
+
   },[cartItems])
 
   useEffect(() => {
@@ -65,7 +80,7 @@ const App = () => {
                 key={course.id}
                 course={course}
                 onAddItem = {onAddItem}
-                onClick={() => onRemoveItem(course)}
+                onClick={onRemoveItem}
             />
           </>
         ))}
