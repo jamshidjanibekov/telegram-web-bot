@@ -44,15 +44,15 @@ const App = () => {
     const queryID = telegram.initDataUnsave?.query_id
 
     if (queryID) {
-      fetch('https://localhost:8080', {
+      fetch('https://localhost:8000', {
         method:'Post',
         headers:{
           'Content-Type':'application/json',
         },
-        body:JSON.stringify(cartItems)
+        body:JSON.stringify(JSON.stringify({products:cartItems, queryID:queryID}))
       })
     }else {
-      telegram.sendDate(JSON.stringify({products:cartItems, queryID:queryID}))
+      telegram.sendDate(JSON.stringify(cartItems))
     }
 
   },[cartItems])
