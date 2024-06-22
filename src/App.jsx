@@ -52,7 +52,7 @@ const App = () => {
         body:JSON.stringify(cartItems)
       })
     }else {
-      telegram.sendDate(JSON.stringify(cartItems))
+      telegram.sendDate(JSON.stringify({products:cartItems, queryID:queryID}))
     }
 
   },[cartItems])
