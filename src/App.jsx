@@ -41,7 +41,7 @@ const App = () => {
   }
 
   const onSendData = useCallback(() =>{
-    const queryID = telegram.initDataUnsave?.query_id
+    const queryID = telegram.initDataUnsafe?.query_id
 
     if (queryID) {
       fetch('https://localhost:8000', {
@@ -54,7 +54,6 @@ const App = () => {
     }else {
       telegram.sendDate(JSON.stringify(cartItems))
     }
-
   },[cartItems])
 
   useEffect(() => {
